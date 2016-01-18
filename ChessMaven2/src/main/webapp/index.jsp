@@ -36,7 +36,7 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse" collapse="isCollapsed">
        <ul class="nav navbar-nav">
-         <li ng-show="auth.isAuthenticated()"><a href="#/messages"><i class="fa fa-users"></i> La salle ma couille !!</a></li>
+         <li ng-hide="auth.isAuthenticated()"><a href="#/messages"><i class="fa fa-users"></i> La salle ma couille !!</a></li>
          <li ng-show="auth.isAuthenticated()"><a href="#/playlists"><i class="fa fa-tasks"></i> My playlists</a></li>
        </ul>
        <ul class="nav navbar-nav navbar-right">

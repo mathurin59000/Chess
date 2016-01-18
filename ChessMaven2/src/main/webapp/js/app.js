@@ -14,6 +14,9 @@ app.config(['$routeProvider',
         templateUrl: 'templates/auth/register.html',
         controller: 'RegisterController'
       }).
+      when('/messages', {
+	      templateUrl: 'templates/user/messages.html'
+	    }).
       otherwise({
         redirectTo: '/'
       });
