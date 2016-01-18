@@ -1,4 +1,23 @@
-var app=angular.module('App', []);
+var app=angular.module('App', ['ngRoute']);
+
+app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/', {
+    	 templateUrl: 'templates/home.html' 
+      }).
+      when('/login', {
+        templateUrl: 'templates/auth/login.html',
+        controller: 'LoginController'
+      }).
+      when('/register', {
+        templateUrl: 'templates/auth/register.html',
+        controller: 'RegisterController'
+      }).
+      otherwise({
+        redirectTo: '/'
+      });
+  }]);
 
 angular.module('App').constant('YT_event', {
 	STOP:            0, 

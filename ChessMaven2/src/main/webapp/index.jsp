@@ -10,11 +10,14 @@
 	<!--Init scripts-->
     <script src="js/dependencies/jquery-1.11.3.min.js"></script>
 	<script src="js/dependencies/angular.min.js"></script>
+	<script src="js/dependencies/angular-route.js"></script>
 	<script src="js/dependencies/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/controllers/youtubeController.js"></script>
 	<script src="js/controllers/messagesController.js"></script>
 	<script src="js/controllers/navController.js"></script>
+	<script src="js/controllers/registerController.js"></script>
+	<script src="js/controllers/loginController.js"></script>
 </head>
 <body ng-app="App">
 <nav class="navbar navbar-default" role="navigation" ng-controller="NavController">
@@ -27,7 +30,7 @@
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
        </button>
-       <a class="navbar-brand" href="#">PlugDj v1.00</a>
+       <a class="navbar-brand" href="#/">PlugDj v1.00</a>
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
@@ -40,16 +43,13 @@
          <li ng-hide="auth.isAuthenticated()"><a href="#/login">Login</a></li>
          <li ng-hide="auth.isAuthenticated()"><a href="#/register">Register</a></li>
          <li ng-hide="auth.isAuthenticated()"><p class="navbar-text">Hello, <strong>{{testMessages}}</strong></p></li>
-         <li ng-show="auth.isAuthenticated()"><a href="#" ng-click="logout()">Logout</a></li>
+         <li ng-show="auth.isAuthenticated()"><a href="#/" ng-click="logout()">Logout</a></li>
        </ul>
      </div><!-- /.navbar-collapse -->
    </div><!-- /.container-fluid -->
 </nav>
-<div ng-controller="YoutubeController">
-	<h3>Hello Arnaud !</h3>
-	<h4>{{url.email}}</h4>
-	<button class="btn btn-danger" ng-click="clickBoutonRouge()">Bouton rouge</button>
-</div>
+<div ng-view></div>
+
 
 </body>
 </html>
