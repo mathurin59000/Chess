@@ -1,4 +1,4 @@
-package org.example.servlet;
+package org.example.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,15 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class Register
  */
-public class UserServlet extends HttpServlet {
+public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserServlet() {
+    public Register() {
         super();
         // TODO Auto-generated constructor stub
     }
