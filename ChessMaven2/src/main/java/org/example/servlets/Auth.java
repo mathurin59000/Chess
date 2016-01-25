@@ -7,17 +7,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.example.db.DatabaseConnection;
+import org.json.simple.JSONObject;
+
 /**
  * Servlet implementation class Auth
  */
 public class Auth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String SERVER="localhost", BD="plugdj", LOGIN="root", PASSWORD="";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -44,53 +50,48 @@ public class Auth extends HttpServlet {
 		String email;
 		String password;
 		String confirmedPassword;
-		if(request.getParameter("username")!=null&&request.getParameter("email")!=null&&request.getParameter("password")!=null&&request.getParameter("confirmedPassword")!=null){
+		if(request.getParameter("email")!=null&&request.getParameter("password")!=null){
 			//Récupération des paramètres
-			username = request.getParameter("username");
 			email = request.getParameter("email");
 			password = request.getParameter("password");
-			confirmedPassword = request.getParameter("confirmedPassword");
-			System.out.println("test");
-			//Connexion à la BDD
-			String url = "jdbc:mysql://localhost:3306/plugdj";
-			String utilisateur = "";
-			String motDePasse = "";
-			Connection connexion = null;
+			DatabaseConnection jdbc;
 			try {
-				System.out.println("test try");
-			    connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
-			    System.out.println("test try 2");
-			    System.out.println(connexion);
-
-			    /* Création de l'objet gérant les requêtes */
-			    Statement statement = (Statement) connexion.createStatement();
-			    ResultSet resultat = ((java.sql.Statement) statement).executeQuery( "SELECT id, email FROM users;" );
-			    System.out.println(resultat);
-			    
-			   /* while ( resultat.next() ) {
-			        int idUtilisateur = resultat.getInt( "id" );
-			        String emailUtilisateur = resultat.getString( "email" );
-			        String motDePasseUtilisateur = resultat.getString( "mot_de_passe" );
-			        String nomUtilisateur = resultat.getString( "nom" );
-
-			    }*/
-
-			} catch ( SQLException e ) {
-				System.out.println(e.getMessage());
-			    /* Gérer les éventuelles erreurs ici */
-			} finally {
-			    if ( connexion != null )
-			        try {
-			            /* Fermeture de la connexion */
-			            connexion.close();
-			        } catch ( SQLException ignore ) {
-			            /* Si une erreur survient lors de la fermeture, il suffit de l'ignorer. */
-			        }
+				jdbc = new DatabaseConnection();
+				try {
+					jdbc.connect(SERVER, BD, LOGIN, PASSWORD);
+					List<Map<String, String>> user = jdbc.auth(email, password);
+					if(user.size()==1){
+						System.out.println(user);
+						System.out.println(user.get(0));
+						String key1 = "id";
+						String key2 = "username";
+						String key3 = "email";
+						String key4 = "token";
+						System.out.println(user.get(0).get(key1));
+						JSONObject myJson = new JSONObject();
+						myJson.put("id", user.get(0).get(key1));
+						myJson.put("username", user.get(0).get(key2));
+						myJson.put("email", user.get(0).get(key3));
+						myJson.put("token", user.get(0).get(key4));
+						PrintWriter out = response.getWriter();
+						out.print(myJson);
+						out.flush();
+					}
+					else{
+						response.setContentType("application/json");   
+						PrintWriter out = response.getWriter();
+						String jsonObject = "{\"error\":\"Email or password are not correct !\"}";
+						out.print(jsonObject);
+						out.flush();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			//Vérification si email valide
-				//vérification mdp
-				//Ecriture dans la BDD
 		}
 		else{
 			response.setContentType("application/json");   

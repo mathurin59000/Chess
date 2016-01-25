@@ -1,5 +1,9 @@
 <div class="container">
+	<alert class="alert" ng-repeat="error in errors" type="danger">{{error}}</alert>
 	<form name="registerForm" class="form-signin" novalidate>
+	  <div class="control-group">
+	    <input type="text" class="form-control" placeholder="username" name="username" ng-model="user.username" required>
+	  </div>
 	  <div class="control-group">
 	    <input type="email" class="form-control" placeholder="email" name="email" ng-model="user.email" required>
 	  </div>
@@ -7,7 +11,7 @@
 	    <input type="password" class="form-control" placeholder="password" name="password" ng-model="user.password" required>
 	  </div>
 	  <div class="control-group">
-	    <input type="password" class="form-control" placeholder="confirm password" name="confirmpassword" ng-model="user.confirmPassword" required>
+	    <input type="password" class="form-control" placeholder="confirm password" name="confirmpassword" ng-model="user.confirmedPassword" required>
 	  </div>
 	
 	  <input type="submit" class="btn btn-lg btn-primary btn-block" ng-click="register()" value="Create Account" />

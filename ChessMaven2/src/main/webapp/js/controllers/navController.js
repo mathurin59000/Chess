@@ -1,5 +1,12 @@
-angular.module('App').controller('NavController', function($scope) {
+angular.module('App').controller('NavController', function($scope, Auth, CurrentUser) {
 	
-	$scope.testMessages="Username";
+	$scope.isCollapsed = true;
+    $scope.auth = Auth;
+    $scope.user = CurrentUser.user();
+    
+    $scope.logout = function() {
+      Auth.logout();
+      //windows.location.href="/";
+    }
 	
  });

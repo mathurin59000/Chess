@@ -18,6 +18,10 @@
 	<script src="js/controllers/navController.js"></script>
 	<script src="js/controllers/registerController.js"></script>
 	<script src="js/controllers/loginController.js"></script>
+	<script src="js/services/localStorage.js"></script>
+	<script src="js/services/auth.js"></script>
+	<script src="js/services/accessLevels.js"></script>
+	<script src="js/services/currentUser.js"></script>
 </head>
 <body ng-app="App">
 <nav class="navbar navbar-default" role="navigation" ng-controller="NavController">
@@ -36,14 +40,14 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse" collapse="isCollapsed">
        <ul class="nav navbar-nav">
-         <li ng-hide="auth.isAuthenticated()"><a href="#/messages"><i class="fa fa-users"></i> La salle ma couille !!</a></li>
+         <li ng-show="auth.isAuthenticated()"><a href="#/messages"><i class="fa fa-users"></i> La salle ma couille !!</a></li>
          <li ng-show="auth.isAuthenticated()"><a href="#/playlists"><i class="fa fa-tasks"></i> My playlists</a></li>
        </ul>
        <ul class="nav navbar-nav navbar-right">
          <li ng-hide="auth.isAuthenticated()"><a href="#/login">Login</a></li>
          <li ng-hide="auth.isAuthenticated()"><a href="#/register">Register</a></li>
-         <li ng-hide="auth.isAuthenticated()"><p class="navbar-text">Hello, <strong>{{testMessages}}</strong></p></li>
-         <li ng-show="auth.isAuthenticated()"><a href="#/" ng-click="logout()">Logout</a></li>
+         <li ng-show="auth.isAuthenticated()"><p class="navbar-text">Hello, <strong>{{user.username}}</strong></p></li>
+         <li ng-show="auth.isAuthenticated()"><a href="#/login" ng-click="logout()">Logout</a></li>
        </ul>
      </div><!-- /.navbar-collapse -->
    </div><!-- /.container-fluid -->
