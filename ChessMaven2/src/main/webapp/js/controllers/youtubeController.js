@@ -1,8 +1,8 @@
 angular.module('App').controller('YoutubeController', function($scope, CurrentUser, YT_event) {
 	
 	$scope.yt = {
-	    width: 720, 
-	    height: 480, 
+	    width: 545, 
+	    height: 370, 
 	    videoid: "m8Mx3nWwDF0",
 	    playerStatus: "NOT PLAYING"
 	  };

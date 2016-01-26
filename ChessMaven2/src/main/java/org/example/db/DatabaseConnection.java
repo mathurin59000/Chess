@@ -46,7 +46,6 @@ public class DatabaseConnection {
     public List<Map<String, String>> createUser(String username, String email, String password){
     	List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
     	Statement statement;
-    	System.out.println("haha");
 		try {
 			statement = (Statement) connexion.createStatement();
 			ResultSet users = statement.executeQuery( "SELECT * FROM users");

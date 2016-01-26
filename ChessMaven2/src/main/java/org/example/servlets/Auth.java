@@ -61,13 +61,10 @@ public class Auth extends HttpServlet {
 					jdbc.connect(SERVER, BD, LOGIN, PASSWORD);
 					List<Map<String, String>> user = jdbc.auth(email, password);
 					if(user.size()==1){
-						System.out.println(user);
-						System.out.println(user.get(0));
 						String key1 = "id";
 						String key2 = "username";
 						String key3 = "email";
 						String key4 = "token";
-						System.out.println(user.get(0).get(key1));
 						JSONObject myJson = new JSONObject();
 						myJson.put("id", user.get(0).get(key1));
 						myJson.put("username", user.get(0).get(key2));
