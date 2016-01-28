@@ -6,6 +6,7 @@
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
+
 	
 	<!--Init scripts-->
     <script src="js/dependencies/jquery-1.11.3.min.js"></script>
