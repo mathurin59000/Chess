@@ -16,12 +16,6 @@
   	<description></description>
   	<servlet-class>org.example.servlets.Register</servlet-class>
   </servlet>
-  <servlet>
-  	<servlet-name>WebSocketChatServlet</servlet-name>
-  	<display-name>WebSocketChatServlet</display-name>
-  	<description></description>
-  	<servlet-class>org.example.servlets.WebSocketChatServlet</servlet-class>
-  </servlet>
   <servlet-mapping>
   	<servlet-name>Auth</servlet-name>
   	<url-pattern>/auth</url-pattern>
@@ -29,9 +23,5 @@
   <servlet-mapping>
   	<servlet-name>Register</servlet-name>
   	<url-pattern>/register</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>WebSocketChatServlet</servlet-name>
-  	<url-pattern>/WebSocketChatServlet</url-pattern>
   </servlet-mapping>
 </web-app>

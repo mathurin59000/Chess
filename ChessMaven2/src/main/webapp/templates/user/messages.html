@@ -31,15 +31,15 @@
           <div class="content">
             <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>  
             <br />
-            <button class="btn btn-default btn-primary" ng-click="refresh()"><i class="fa fa-refresh"></i> Refresh</button>
+            <button class="btn btn-default btn-sm btn-primary" ng-click="refresh()"><i class="fa fa-refresh"></i> Refresh</button>
             <!--<button class="btn btn-default btn-primary" ng-click="sendControlEvent(YT_event.STOP)">Stop</button>
             <button class="btn btn-default btn-primary" ng-click="sendControlEvent(YT_event.PAUSE)">Pause</button>
             <button class="btn btn-default btn-primary" ng-click="sendControlEvent(YT_event.PLAY)">Play</button>-->
-            <button class="btn btn-default btn-primary" ng-click="stopDisplay()"><i class="fa fa-stop"></i> Stop Display</button>
-            <button class="btn btn-default btn-primary" ng-click="resetList()"><i class="fa fa-eraser"></i> Reset Dj List</button>
-            <button class="btn btn-default btn-primary" ng-click="pass()"><i class="fa fa-forward"></i> Pass</button>
-            <button class="btn btn-default btn-success" ng-click="like()"><i class="fa fa-thumbs-up"></i> +1</button>
-            <button class="btn btn-default btn-danger" ng-click="unlike()"><i class="fa fa-thumbs-down"></i> -1</button>
+            <button class="btn btn-default btn-sm btn-primary" ng-click="stopDisplay()"><i class="fa fa-stop"></i> Stop Display</button>
+            <button class="btn btn-default btn-sm btn-primary" ng-click="resetList()"><i class="fa fa-eraser"></i> Reset Dj List</button>
+            <button class="btn btn-default btn-sm btn-primary" ng-click="pass()"><i class="fa fa-forward"></i> Pass</button>
+            <button class="btn btn-default btn-sm btn-success" ng-click="like()"><i class="fa fa-thumbs-up"></i> +1</button>
+            <button class="btn btn-default btn-sm btn-danger" ng-click="unlike()"><i class="fa fa-thumbs-down"></i> -1</button>
             <span class="label label-warning">{{likes}} : {{unlikes}}</span>
             <p><i class="fa fa-youtube-play"></i> Player status is: {{yt.playerStatus}}</p>
             <p><!-- Large modal -->
@@ -68,23 +68,122 @@
               </div>
             </p>
             <div class="progress">
-              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
-                <span class="sr-only">35% Complete</span>
-              </div>
+              <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 35%">
+			    <span class="sr-only">35% Complete (success)</span>
+			  </div>
+			  <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 65%">
+			    <span class="sr-only">65% Complete (danger)</span>
+			  </div>
             </div>
             
           </div>
         </div>
       </div>
       <div class="col-xs-6 col-sm-3 col-sm-height col-sm-top" ng-controller="MessagesController">
-        <div class="inside inside-full-height">
+      	<div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <i class="fa fa-comment"></i> Chat
+                    <div class="btn-group pull-right">
+                    </div>
+                </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o"></i> 12 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">Arnaud Tricard</strong> <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o"></i> 12 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">Ramart Mathurin</strong> <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o"></i> 14 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">Roger Federer</strong> <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o"></i> 12 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">Mickey Mouse</strong> <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o"></i> 12 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">Ta maman</strong> <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o"></i> 14 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            </div>
+        <!--<div class="inside inside-full-height">
           <div class="content">
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="message in messages">
                 <b>{{message.email}} :</b> {{message.body}}
-                <!--<span class="badge">
+                <span class="badge">
                   <span class="delete-button" ng-click="deleteMessage(message)">X</span>
-                </span>-->
+                </span>
               </li>
             </ul>
             <form name="newMessageForm" novalidate class="form-inline">
@@ -97,7 +196,7 @@
             </form>
           </div>
         </div>
-        <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"> Chat</i></h3>
+        <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"> Chat</i></h3>-->
       </div>
      </div>
   </div>

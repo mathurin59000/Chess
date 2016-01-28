@@ -93,7 +93,7 @@ public class Auth extends HttpServlet {
 		else{
 			response.setContentType("application/json");   
 			PrintWriter out = response.getWriter();
-			String jsonObject = "{\"error\":\"All fiels are required, complete it !\"}";
+			String jsonObject = "{\"error\":\"All fields are required, complete it !\"}";
 			out.print(jsonObject);
 			out.flush();
 		}

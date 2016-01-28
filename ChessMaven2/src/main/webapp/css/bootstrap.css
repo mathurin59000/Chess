@@ -11,6 +11,7 @@ html {
 }
 body {
   margin: 0;
+  background-image:url(background.jpg);
 }
 article,
 aside,
@@ -1608,6 +1609,11 @@ pre code {
 @media (min-width: 1200px) {
   .container {
     width: 1170px;
+  }
+  .panel-body{
+  	max-height: 600px;
+    overflow-y:scroll;
+    min-height: 600px;
   }
 }
 .container-fluid {
