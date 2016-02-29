@@ -1,0 +1,33 @@
+<div class="col-xs-6 col-sm-3 col-sm-height col-sm-top" ng-controller="YoutubeController">
+      	<div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <i class="fa fa-comment"></i> Playlist
+                    <div class="btn-group pull-right">
+                    </div>
+                </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix" ng-repeat="lien in urls">
+                            <div class="chat-body">
+                                <div class="header">
+                                    <strong class="primary-font">{{message.username}} :</strong> 
+                                </div>
+                                <p>{{message.data}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" ng-model="message" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" ng-click="addMessage()" id="btn-chat">
+                                Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            </div>

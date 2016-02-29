@@ -93,6 +93,38 @@ public class DatabaseConnection {
 		return resultat;
     }
     
+    public List<Map<String, String>> getUrls(){
+    	List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
+    	Statement statement = null;
+    	ResultSet urls;
+    	
+    	try {
+			statement = (Statement) connexion.createStatement();
+			try {
+				urls = statement.executeQuery( "SELECT * FROM urls");
+				String mess = "";
+				while (urls.next()) {
+	                    Map<String, String> url = new HashMap<String, String> ();
+	                    	url.put("id", urls.getString("id"));
+	                        url.put("username", urls.getString("username"));
+	                        url.put("url", urls.getString("url"));
+	                        url.put("urlMinify", urls.getString("urlMinify"));
+	                        resultat.add(url); 
+									
+		        }
+				return resultat;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultat;
+    }
+    
+    
     public List<Map<String, String>> auth(String email, String password){
     	List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
     	Statement statement = null;
@@ -138,4 +170,107 @@ public class DatabaseConnection {
             // Et on renvoie
             return resultat;
     }
+
+	public List<Map<String, String>> createUrl(String username, String id, String url, String urlMinify) {
+		// TODO Auto-generated method stub
+		List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
+    	Statement statement = null;
+    	ResultSet users;
+		try {
+			statement = (Statement) connexion.createStatement();
+			try {
+				users = statement.executeQuery( "SELECT * FROM users");
+				while (users.next()) {
+					if(users.getString("id").equals(id)){
+						List<Map<String, String>> resultat2 = new ArrayList<Map<String, String>>();
+				    	//Statement statement2;
+								try {
+									String sql = "INSERT INTO urls"
+											+ "(username, url, urlMinify) VALUES"
+											+ "(?,?,?)";
+									PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
+									//String id2 = UUID.randomUUID().toString();
+									//preparedStatement.setString(1, id2);
+									preparedStatement.setString(1, username);
+									preparedStatement.setString(2, url);
+									preparedStatement.setString(3, urlMinify);
+									preparedStatement.executeUpdate();
+									
+									
+					                    Map<String, String> url2 = new HashMap<String, String> ();
+					                  
+					                    	//url2.put("id", id2);
+					                        url2.put("username", username);
+					                        url2.put("url", url);
+					                        url2.put("urlMinify", urlMinify);
+					                        resultat.add(url2);
+					                     
+									
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						return resultat;
+					}
+		        }
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return resultat;
+	}
+
+	public List<Map<String, String>> deleteUrl(String id) {
+		System.out.println("Dans delete !");
+		// TODO Auto-generated method stub
+		List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
+    	Statement statement = null;
+    	ResultSet urls;
+		try {
+			statement = (Statement) connexion.createStatement();
+			try {
+				urls = statement.executeQuery( "SELECT * FROM urls");
+				while (urls.next()) {
+					System.out.println(urls);
+					if(urls.getString("id").equals(id)){
+				    	//Statement statement2;
+						System.out.println(id);
+						System.out.println(urls.getString("id"));
+						try {
+									String sql = "DELETE FROM urls "
+											+ "WHERE id = '"+urls.getString("id")+"'";
+									PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
+									preparedStatement.executeUpdate();
+									
+									
+					                    Map<String, String> url = new HashMap<String, String> ();
+					                  
+					                    	url.put("id", urls.getString("id"));
+					                        url.put("username", urls.getString("username"));
+					                        url.put("url", urls.getString("url"));
+					                        url.put("urlMinify", urls.getString("urlMinify"));
+					                        resultat.add(url);
+					                     
+									
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						return resultat;
+					}
+		        }
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return resultat;
+	}
 }

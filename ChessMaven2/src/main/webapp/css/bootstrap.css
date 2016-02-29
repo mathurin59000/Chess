@@ -12,6 +12,8 @@ html {
 body {
   margin: 0;
   background-image:url(background.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 article,
 aside,

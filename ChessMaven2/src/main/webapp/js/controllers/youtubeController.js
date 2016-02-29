@@ -1,15 +1,109 @@
 angular.module('App').controller('YoutubeController', function($scope, CurrentUser, YT_event) {
+	var socketVote = new WebSocket("ws://localhost:8080/ChessMaven2/vote");
+	var votes = [];
+	socketVote.onopen=function(message){
+		console.log(message);
+	};
+	
+	$scope.sendControlEvent = function(ctrlEvent){
+		this.$broadcast(ctrlEvent);
+	}
+	
+	socketVote.onmessage = function(message){
+		if(message.data.split("/", 2)[1]=="+1"){
+			$scope.likes++;
+			$scope.$apply();
+		}
+		else if(message.data.split("/", 2)[1]=="-1"){
+			$scope.unlikes++;
+			$scope.$apply();
+		}
+		var json = {
+				email: message.data.split("/", 2)[0],
+				data: message.data.split("/", 2)[1]
+		};
+		votes.push(json);
+	};
+	
+	$scope.addVote = function(vote){
+		    var ok=true;
+			votes.some(function name(element, index, array){
+				if(element.email==$scope.user.email){
+					ok=false
+					return true;
+				}
+			});
+			if(ok){
+				if(vote=="+1"){
+					$scope.likes++;
+				}
+				else if(vote=="-1"){
+					$scope.unlikes++;
+				}
+				var mess = $scope.user.email+"/"+vote;
+				socketVote.send(mess);
+				var json = {
+						email: $scope.user.email,
+						data: vote
+				};
+				votes.push(json);
+			}
+	};
+	
+	socketVote.onclose = function(e){
+		socketVote.close();
+	};
+	
+	//--------------------------------------------------------------------------------------------------
+	
+	var socketUrl = new WebSocket("ws://localhost:8080/ChessMaven2/url");
+	socketUrl.onopen=function(message){
+		console.log(message);
+	};
+	var started = false;
+	
+	socketUrl.onmessage = function(message){
+		console.log(message.data);
+		if(message.data.indexOf("error")<=0){
+			console.log(message.data);
+			var tab = message.data.split("|");
+			for(var i=0;i<tab.length;i++){
+				var json = JSON.parse(tab[i]);
+				$scope.urls.push(json);
+			}
+			console.log(tab);
+			$scope.$apply();
+			if ($scope.urls.length > 0 && !started){
+				$scope.yt.videoid=$scope.urls[0].urlMinify;
+				started = true;
+				$scope.sendControlEvent(1);
+			}
+		}
+		
+	};
+			
+	
+	socketUrl.onclose = function(e){
+		socketUrl.close();
+	};
+	
+	//---------------------------------------------------------------------------------------
 	
 	$scope.yt = {
 	    width: 545, 
 	    height: 370, 
-	    videoid: "m8Mx3nWwDF0",
+	    videoid: "",
 	    playerStatus: "NOT PLAYING"
 	  };
 
 	  $scope.urls = [];
 	  $scope.urlsFailed = [];
 	  $scope.user = CurrentUser.user();
+	  console.log("user");
+	  console.log($scope.user);
+	  if(!$scope.user.id||!$scope.user.token||!$scope.user.email||!$scope.user.username){
+		  window.location.href="http://localhost:8080/ChessMaven2/#/login";
+	  }
 	  $scope.likes = 0;
 	  $scope.unlikes = 0;
 	  $scope.stopMode = false;
@@ -17,7 +111,7 @@ angular.module('App').controller('YoutubeController', function($scope, CurrentUs
 	  
 	  $scope.$on(YT_event.STATUS_CHANGE, function(event, data) {
 	      $scope.yt.playerStatus = data;
-	      console.log("quelque chose vient de se passer !");
+	      console.log("something appenned !");
 	      console.log(data);
 	      if(data=="NOT PLAYING"){
 	        if($scope.stopMode == true){
@@ -35,11 +129,8 @@ angular.module('App').controller('YoutubeController', function($scope, CurrentUs
 	      if(data=="ENDED"){
 	        console.log(typeof $scope.urls);
 	        console.log($scope.yt);
-	        /*io.socket.delete('/url/addConv', {id: $scope.urls[0].id, url: $scope.urls[0].url, urlMinify: $scope.urls[0].urlMinify, email: $scope.urls[0].email});
-	        //$scope.urls.splice(0, 1);
-	        $scope.votes.forEach(function name(element, index, array){
-	          io.socket.delete('/vote/addConv/',{id: element.id, vote: element.vote, email: element.email});
-	        });*/
+	        socketUrl.send("delete:id="+$scope.urls[0].id);
+	        $scope.urls.shift();
 	        $scope.likes = 0;
 	        $scope.unlikes = 0;
 	        if($scope.urls[0]){
@@ -71,13 +162,15 @@ angular.module('App').controller('YoutubeController', function($scope, CurrentUs
 	          }
 	        }
 	      }
+	      var mess = "id="+$scope.user.id+"&username="+$scope.user.username+"&url="+$scope.newUrl+"&urlMinify="+urlMinify;
+	      socketUrl.send(mess);
 	      var item = {
-	        url: $scope.newUrl,
-	        urlMinify: urlMinify,
-	        email: $scope.user.email,
-	        time: 0
+	    		  id: "",
+	    		  username: $scope.user.username,
+	    		  url: $scope.newUrl,
+	    		  urlMinify: urlMinify
 	      };
-	      //io.socket.post('/url/addConv', {email: item.email, url: item.url, urlMinify: item.urlMinify, time: item.time});
+	      $scope.urls.push(item);
 	      $scope.newUrl = "";
 	    };
 
