@@ -65,19 +65,39 @@ angular.module('App').controller('YoutubeController', function($scope, CurrentUs
 	socketUrl.onmessage = function(message){
 		console.log(message.data);
 		if(message.data.indexOf("error")<=0){
-			console.log(message.data);
-			var tab = message.data.split("|");
-			for(var i=0;i<tab.length;i++){
-				var json = JSON.parse(tab[i]);
-				$scope.urls.push(json);
+			if(message.data.indexOf("delete")<0){
+				console.log(message.data);
+				var tab = message.data.split("|");
+				for(var i=0;i<tab.length;i++){
+					var json = JSON.parse(tab[i]);
+					$scope.urls.push(json);
+				}
+				console.log(tab);
+				$scope.$apply();
+				if ($scope.urls.length > 0 && !started){
+					$scope.yt.videoid=$scope.urls[0].urlMinify;
+					started = true;
+					$scope.sendControlEvent(1);
+					$scope.$apply();
+				}
 			}
-			console.log(tab);
-			$scope.$apply();
-			if ($scope.urls.length > 0 && !started){
-				$scope.yt.videoid=$scope.urls[0].urlMinify;
-				started = true;
-				$scope.sendControlEvent(1);
+			else{
+				console.log("delete detected");
+				var tab = message.data.split("!");
+				for(var i=0;i<tab.length;i++){
+					console.log(tab[i]);
+				}
+				var json = JSON.parse(tab[1]);
+				$scope.urls.some(function name(element, index, array){
+					if(element.id==json.id){
+						$scope.urls.splice(index, 1);
+						return true;
+					}
+				});
+				console.log("reception d'une url à supprimer :");
+				console.log($scope.urls);
 			}
+			
 		}
 		
 	};
@@ -129,8 +149,10 @@ angular.module('App').controller('YoutubeController', function($scope, CurrentUs
 	      if(data=="ENDED"){
 	        console.log(typeof $scope.urls);
 	        console.log($scope.yt);
-	        socketUrl.send("delete:id="+$scope.urls[0].id);
-	        $scope.urls.shift();
+	        if($scope.yt.videoid==$scope.urls[0].urlMinify){
+	        	socketUrl.send("delete:id="+$scope.urls[0].id);
+		        $scope.urls.shift();
+	        }
 	        $scope.likes = 0;
 	        $scope.unlikes = 0;
 	        if($scope.urls[0]){
@@ -164,14 +186,15 @@ angular.module('App').controller('YoutubeController', function($scope, CurrentUs
 	      }
 	      var mess = "id="+$scope.user.id+"&username="+$scope.user.username+"&url="+$scope.newUrl+"&urlMinify="+urlMinify;
 	      socketUrl.send(mess);
-	      var item = {
+	      /*var item = {
 	    		  id: "",
 	    		  username: $scope.user.username,
 	    		  url: $scope.newUrl,
 	    		  urlMinify: urlMinify
-	      };
-	      $scope.urls.push(item);
+	      };*/
+	      //$scope.urls.push(item);
 	      $scope.newUrl = "";
+	      $scope.sendControlEvent(1);
 	    };
 
 	    $scope.remove = function(item){

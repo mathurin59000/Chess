@@ -54,7 +54,7 @@ public class UrlEndpoint {
 					
 					while ((inputLine = in.readLine()) != null) {
 						if (tab.isEmpty()){
-							tab = inputLine;
+							tab = "delete!"+inputLine;
 						}else {
 							tab = tab + "|" + inputLine;
 						}
@@ -65,9 +65,7 @@ public class UrlEndpoint {
 					      // Iterate over the connected sessions
 					      // and broadcast the received message
 					      for(Session client : clients){
-					        if (!client.equals(session)){
 					          client.getBasicRemote().sendText(tab);
-					        }
 					      }
 					    }
 				  
@@ -103,9 +101,9 @@ public class UrlEndpoint {
 				      // Iterate over the connected sessions
 				      // and broadcast the received message
 				      for(Session client : clients){
-				        if (!client.equals(session)){
+				        
 				          client.getBasicRemote().sendText(tab);
-				        }
+				        
 				      }
 				    }
 			  

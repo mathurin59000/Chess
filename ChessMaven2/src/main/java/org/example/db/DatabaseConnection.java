@@ -176,6 +176,7 @@ public class DatabaseConnection {
 		List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
     	Statement statement = null;
     	ResultSet users;
+    	ResultSet urls;
 		try {
 			statement = (Statement) connexion.createStatement();
 			try {
@@ -189,8 +190,6 @@ public class DatabaseConnection {
 											+ "(username, url, urlMinify) VALUES"
 											+ "(?,?,?)";
 									PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
-									//String id2 = UUID.randomUUID().toString();
-									//preparedStatement.setString(1, id2);
 									preparedStatement.setString(1, username);
 									preparedStatement.setString(2, url);
 									preparedStatement.setString(3, urlMinify);
@@ -198,14 +197,23 @@ public class DatabaseConnection {
 									
 									
 					                    Map<String, String> url2 = new HashMap<String, String> ();
-					                  
-					                    	//url2.put("id", id2);
-					                        url2.put("username", username);
-					                        url2.put("url", url);
-					                        url2.put("urlMinify", urlMinify);
-					                        resultat.add(url2);
-					                     
-									
+					                    try {
+					        				urls = statement.executeQuery( "SELECT * FROM urls");
+					        				while (urls.next()) {
+					        					boolean just_one =false;
+					        					if(urls.getString("url").equals(url)&&urls.getString("urlMinify").equals(urlMinify)&&urls.getString("username").equals(username)&&just_one==false){
+					        						url2.put("id", urls.getString("id"));
+							                        url2.put("username", urls.getString("username"));
+							                        url2.put("url", urls.getString("url"));
+							                        url2.put("urlMinify", urls.getString("urlMinify"));
+							                        resultat.add(url2);
+							                        just_one=true;
+					        					}
+					        				}
+					                    } catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

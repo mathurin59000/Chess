@@ -128,6 +128,7 @@ angular.module('App').directive('youtube', function($window, YT_event) {
       });
 
       scope.$on(YT_event.PLAY, function () {
+    	//player.seekTo(1);
         player.playVideo();
       }); 
 
