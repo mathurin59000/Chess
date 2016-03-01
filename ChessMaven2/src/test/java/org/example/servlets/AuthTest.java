@@ -58,7 +58,7 @@ public class AuthTest {
 
 	@Test
     public void cantRegisterSameUser(){
-        List<Map<String, String>> no_user = new ArrayList<Map<String, String>>();getClass();
+        List<Map<String, String>> no_user = new ArrayList<Map<String, String>>();
         assertEquals(jdbc.createUser(username, emailTest, passwordTest), no_user);
     }
 	
@@ -69,16 +69,12 @@ public class AuthTest {
 	
 	@Test
 	public void successUrl(){
-		System.out.println("dans succesUrl!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println(urlsTest.get(0));
-		System.out.println(jdbc.getUrl(urlsTest.get(0).get("id")));
 		assertEquals(urlsTest, jdbc.getUrl(urlsTest.get(0).get("id")));
 		}
 	
 	@Test
-	public void DeleteUrl(){
-		jdbc.deleteUrl(idTest);
-		
-		//assertNotEquals(urlTest, jdbc.getUrl(idTest));
+	public void deleteUrl(){
+		List<Map<String, String>> no_url = new ArrayList<Map<String, String>>();
+		assertEquals(no_url, jdbc.getUrl(urlsTest.get(0).get("id")));
 	}
 }
