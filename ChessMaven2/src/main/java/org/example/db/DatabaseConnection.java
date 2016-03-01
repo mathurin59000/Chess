@@ -105,15 +105,13 @@ public class DatabaseConnection {
 				String mess = "";
 				while (users.next()) {
 					if(email.equals(users.getString("email"))){
-						
-					}
-	                    Map<String, String> user = new HashMap<String, String> ();
-	                    	user.put("id", users.getString("id"));
-	                        user.put("username", users.getString("username"));
-	                        user.put("email", users.getString("email"));
-	                        user.put("token", users.getString("token"));
-	                        resultat.add(user); 
-									
+						Map<String, String> user = new HashMap<String, String> ();
+                    	user.put("id", users.getString("id"));
+                        user.put("username", users.getString("username"));
+                        user.put("email", users.getString("email"));
+                        user.put("token", users.getString("token"));
+                        resultat.add(user);
+					}     				
 		        }
 				return resultat;
 			} catch (SQLException e) {
@@ -186,6 +184,39 @@ public class DatabaseConnection {
 			e.printStackTrace();
 		}
         return resultat;
+    }
+    
+    public List<Map<String, String>> getUrl(String id){
+    	List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
+    	Statement statement = null;
+    	ResultSet urls;
+    	
+    	try {
+			statement = (Statement) connexion.createStatement();
+			try {
+				urls = statement.executeQuery( "SELECT * FROM urls");
+				
+				while (urls.next()) {
+					if(id.equals(urls.getString("id"))){
+						Map<String, String> url = new HashMap<String, String> ();
+                    	url.put("id", urls.getString("id"));
+                        url.put("username", urls.getString("username"));
+                        url.put("url", urls.getString("url"));
+                        url.put("urlMinify", urls.getString("urlMinify"));
+                        resultat.add(url); 
+					}
+	                    
+		        }
+				return resultat;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultat;
     }
     
     public List<Map<String, String>> getUsers() throws SQLException

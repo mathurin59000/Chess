@@ -1,17 +1,12 @@
 package org.example.servlets;
 
 import org.example.db.DatabaseConnection;
-import org.json.simple.JSONObject;
-
 import static org.junit.Assert.*;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,18 +19,26 @@ public class AuthTest {
 	private String username = "test";
 	private String emailTest = "test@test.fr";
 	private String passwordTest = "1234";
+	private String idTest;
+	private String urlTest = "https://www.youtube.com/watch?v=q74CbVPvnr0";
+	private String urlMinifyTest = "q74CbVPvnr0";
 	private List<Map<String, String>> userTest;
+	private List<Map<String, String>> urlsTest;
 	
 	@Before
 	public void setUp() throws Exception {
 		jdbc = new DatabaseConnection();
 		jdbc.connect(SERVER, BD, LOGIN, PASSWORD);		
 		userTest = jdbc.createUser(username, emailTest, passwordTest);
+		urlsTest = jdbc.createUrl(username, userTest.get(0).get("id"), urlTest, urlMinifyTest);
+		idTest = jdbc.getUser(emailTest).get(0).get("id");
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		jdbc.deleteUser(emailTest);
+		jdbc.deleteUrl(urlsTest.get(0).get("id"));
 	}
 
 	@Test
@@ -55,7 +58,27 @@ public class AuthTest {
 
 	@Test
     public void cantRegisterSameUser(){
-        List<Map<String, String>> no_user = new ArrayList<Map<String, String>>();
-        assertEquals(userTest, no_user);
+        List<Map<String, String>> no_user = new ArrayList<Map<String, String>>();getClass();
+        assertEquals(jdbc.createUser(username, emailTest, passwordTest), no_user);
     }
+	
+	@Test
+    public void successRegister(){
+            assertEquals(userTest, jdbc.getUser(emailTest));       
+    }
+	
+	@Test
+	public void successUrl(){
+		System.out.println("dans succesUrl!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(urlsTest.get(0));
+		System.out.println(jdbc.getUrl(urlsTest.get(0).get("id")));
+		assertEquals(urlsTest, jdbc.getUrl(urlsTest.get(0).get("id")));
+		}
+	
+	@Test
+	public void DeleteUrl(){
+		jdbc.deleteUrl(idTest);
+		
+		//assertNotEquals(urlTest, jdbc.getUrl(idTest));
+	}
 }
