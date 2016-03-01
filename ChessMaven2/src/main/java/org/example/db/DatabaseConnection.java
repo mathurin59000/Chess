@@ -93,6 +93,40 @@ public class DatabaseConnection {
 		return resultat;
     }
     
+    public List<Map<String, String>> getUser(String email){
+    	List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
+    	Statement statement = null;
+    	ResultSet users;
+    	
+    	try {
+			statement = (Statement) connexion.createStatement();
+			try {
+				users = statement.executeQuery( "SELECT * FROM users");
+				String mess = "";
+				while (users.next()) {
+					if(email.equals(users.getString("email"))){
+						
+					}
+	                    Map<String, String> user = new HashMap<String, String> ();
+	                    	user.put("id", users.getString("id"));
+	                        user.put("username", users.getString("username"));
+	                        user.put("email", users.getString("email"));
+	                        user.put("token", users.getString("token"));
+	                        resultat.add(user); 
+									
+		        }
+				return resultat;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultat;
+    }
+    
     public List<Map<String, String>> getUrls(){
     	List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
     	Statement statement = null;
