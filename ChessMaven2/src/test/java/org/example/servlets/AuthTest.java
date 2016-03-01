@@ -74,6 +74,7 @@ public class AuthTest {
 	
 	@Test
 	public void deleteUrl(){
+		jdbc.deleteUrl(urlsTest.get(0).get("id"));
 		List<Map<String, String>> no_url = new ArrayList<Map<String, String>>();
 		assertEquals(no_url, jdbc.getUrl(urlsTest.get(0).get("id")));
 	}

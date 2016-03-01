@@ -311,7 +311,6 @@ public class DatabaseConnection {
 	}
 
 	public List<Map<String, String>> deleteUrl(String id) {
-		System.out.println("Dans delete !");
 		// TODO Auto-generated method stub
 		List<Map<String, String>> resultat = new ArrayList<Map<String, String>>();
     	Statement statement = null;
@@ -321,15 +320,12 @@ public class DatabaseConnection {
 			try {
 				urls = statement.executeQuery( "SELECT * FROM urls");
 				while (urls.next()) {
-					System.out.println(urls);
 					if(urls.getString("id").equals(id)){
 				    	//Statement statement2;
-						System.out.println(id);
-						System.out.println(urls.getString("id"));
 						try {
 									String sql = "DELETE FROM urls "
 											+ "WHERE id IN ("+urls.getString("id")+")";
-									System.out.println(sql);
+	
 									PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
 									preparedStatement.executeUpdate();
 									
