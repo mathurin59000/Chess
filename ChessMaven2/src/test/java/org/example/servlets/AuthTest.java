@@ -23,23 +23,26 @@ public class AuthTest {
 	private String username = "test";
 	private String emailTest = "test@test.fr";
 	private String passwordTest = "1234";
+	private List<Map<String, String>> userTest;
 	
 	@Before
 	public void setUp() throws Exception {
 		jdbc = new DatabaseConnection();
 		jdbc.connect(SERVER, BD, LOGIN, PASSWORD);		
-		
+		userTest = jdbc.createUser(username, emailTest, passwordTest);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		jdbc.deleteUser(emailTest);
 	}
 
 	@Test
 	public void successConnection() {
 		String email = "test@test.fr";
 		String password = "1234";
-		assertEquals(jdbc.createUser(username, emailTest, passwordTest), jdbc.auth(email, password));
+		assertEquals(userTest, jdbc.auth(email, password));
 	}
+	
 
 }

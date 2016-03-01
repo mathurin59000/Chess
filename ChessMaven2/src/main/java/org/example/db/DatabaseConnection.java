@@ -174,9 +174,8 @@ public class DatabaseConnection {
     public void deleteUser(String email) throws SQLException
     {
     	try {
-			String sql = "DELETE FROM urls "
-					+ "WHERE email IN ("+email+")";
-			System.out.println(sql);
+			String sql = "DELETE FROM users "
+					+ "WHERE email ='" + email + "'";
 			PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
