@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import static org.junit.Assert.*;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,4 +53,9 @@ public class AuthTest {
 		assertNotEquals(userTest, jdbc.auth(email, password));
 	}
 
+	@Test
+    public void cantRegisterSameUser(){
+        List<Map<String, String>> no_user = new ArrayList<Map<String, String>>();
+        assertEquals(userTest, no_user);
+    }
 }
