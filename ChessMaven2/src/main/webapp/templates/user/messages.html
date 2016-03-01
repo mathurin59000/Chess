@@ -3,28 +3,32 @@
   <div class="row">
     <div class="row-height" ng-controller="YoutubeController">
       <div class="col-xs-6 col-sm-3 col-sm-height col-sm-top">
-        <div class="inside inside-full-height">
-          <div class="content">
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="lien in urls">
-                <!--<span class="badge">
-                  <span class="delete-button" ng-click="remove(lien)">X</span>
-                </span>-->
-                <b>{{lien.username}} : </b></br>
-                {{lien.url}}
-              </li>
-            </ul>
-            <form name="newMessageForm" novalidate class="form-inline">
-              <div class="input-group">
-                <input class="form-control" type="text" name="body" ng-model="newUrl" placeholder="New Youtube Url">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-primary" ng-click="add()">Add an URL Youtube</button>
-                </span>
-              </div>
-            </form>
-          </div>
-        </div>
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-list"></i> Djs list</h3>
+      	<div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <i class="fa fa-headphones"></i> Queue
+                    <div class="btn-group pull-right">
+                    </div>
+                </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="item in urls">
+                                <b>{{item.username}} : </b>
+                                {{item.url}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" ng-model="newUrl" placeholder="New Youtube Url" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" ng-click="add()" id="btn-chat">
+                                Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
       </div>
       <div class="col-xs-12 col-sm-6 col-sm-height">
         <div class="inside inside-full-height">
@@ -41,41 +45,7 @@
             <button class="btn btn-default btn-sm btn-success" ng-click="addVote('+1')"><i class="fa fa-thumbs-up"></i> +1</button>
             <button class="btn btn-default btn-sm btn-danger" ng-click="addVote('-1')"><i class="fa fa-thumbs-down"></i> -1</button>
             <span class="label label-warning">{{likes}} : {{unlikes}}</span>
-            <p><i class="fa fa-youtube-play"></i> Player status is: {{yt.playerStatus}}</p>
-            <p><!-- Large modal -->
-              <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal">
-                Accept challenge !
-              </button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Challenge !</h4>
-                    </div>
-                    <div class="modal-body">
-                      What is the title of this song ?
-                      <input type="text" class="form-control" ng-model="myChoice">
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-default btn-warning" data-dismiss="modal" ng-click="makeChoice()">Valid</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </p>
-            <div class="progress">
-              <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 35%">
-			    <span class="sr-only">35% Complete (success)</span>
-			  </div>
-			  <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 65%">
-			    <span class="sr-only">65% Complete (danger)</span>
-			  </div>
-            </div>
-            
+            <p><i class="fa fa-youtube-play"></i> Player status is: {{yt.playerStatus}}</p>  
           </div>
         </div>
       </div>
@@ -88,14 +58,10 @@
                 </div>
             <div class="panel">
                 <div class="panel-body">
-                    <ul class="chat">
-                        <li class="left clearfix" ng-repeat="message in messages">
-                            <div class="chat-body">
-                                <div class="header">
-                                    <strong class="primary-font">{{message.username}}</strong>
-                                </div>
-                                <p>{{message.data}}</p>
-                            </div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="message in messages">
+                                <b>{{message.username}} : </b>
+                                {{message.data}}
                         </li>
                     </ul>
                 </div>

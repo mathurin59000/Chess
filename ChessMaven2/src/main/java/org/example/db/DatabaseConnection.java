@@ -242,7 +242,8 @@ public class DatabaseConnection {
 						System.out.println(urls.getString("id"));
 						try {
 									String sql = "DELETE FROM urls "
-											+ "WHERE id = '"+urls.getString("id")+"'";
+											+ "WHERE id IN ("+urls.getString("id")+")";
+									System.out.println(sql);
 									PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
 									preparedStatement.executeUpdate();
 									
