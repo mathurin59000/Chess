@@ -43,6 +43,13 @@ public class AuthTest {
 		String password = "1234";
 		assertEquals(userTest, jdbc.auth(email, password));
 	}
-	
+	 
+	@Test
+	public void failConnection(){
+		String email = "test@test.fr";
+		String password = "1243";
+		
+		assertNotEquals(userTest, jdbc.auth(email, password));
+	}
 
 }
