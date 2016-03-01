@@ -170,6 +170,20 @@ public class DatabaseConnection {
             // Et on renvoie
             return resultat;
     }
+    
+    public void deleteUser(String email) throws SQLException
+    {
+    	try {
+			String sql = "DELETE FROM urls "
+					+ "WHERE email IN ("+email+")";
+			System.out.println(sql);
+			PreparedStatement preparedStatement = (PreparedStatement) connexion.prepareStatement(sql);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 	public List<Map<String, String>> createUrl(String username, String id, String url, String urlMinify) {
 		// TODO Auto-generated method stub
